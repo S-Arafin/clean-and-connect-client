@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@plugin "daisyui";
+@plugin "daisyui/theme" {
+  name: "forest";
+  default: true;
+  --color-primary: blue;
+  --color-secondary: teal;
+}
+
+
+@plugin "daisyui/theme" {
+  name: "cupcake"; 
+}
