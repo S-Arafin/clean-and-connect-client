@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         path: "/issues",
         element: <AllIssues />,
       },
-      // Private Routes
+      
       {
         path: "/add-issue",
         element: (
