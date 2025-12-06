@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { NavLink, Link, useNavigate } from "react-router";
-import { FaBars, FaSun, FaMoon, FaUserCircle } from "react-icons/fa";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { FaBars, FaSun, FaMoon } from "react-icons/fa";
 import { AuthContext } from "../context/AuthContext";
 
 const Header = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  
   
   const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "forest");
 
@@ -36,7 +35,7 @@ const Header = () => {
         <>
             <li><NavLink to="/add-issue">Add Issue</NavLink></li>
             <li><NavLink to="/my-issues">My Issues</NavLink></li>
-            <li><NavLink to="/my-contribution">My Contribution</NavLink></li>
+            <li><NavLink to="/my-contributions">My Contributions</NavLink></li>
         </>
       )}
     </>
@@ -66,7 +65,6 @@ const Header = () => {
 
         <div className="navbar-end gap-3">
           
-
           <label className="swap swap-rotate btn btn-ghost btn-circle btn-sm">
             <input type="checkbox" onChange={toggleTheme} checked={theme === "cupcake"} />
             <FaSun className="swap-on fill-current w-5 h-5" />
