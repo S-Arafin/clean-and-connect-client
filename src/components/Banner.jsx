@@ -117,7 +117,7 @@ const Banner = () => {
                 transition={{ duration: 0.5, delay: 0.7 }}
                 className="pt-4"
               >
-                <Link to="/register">
+                <Link to="auth/login">
                   <button className="btn btn-lg bg-white text-black hover:bg-gray-200 border-none rounded-full px-8 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] transition-all duration-300 group">
                     Get Started
                     <ArrowRight className="inline-block ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />

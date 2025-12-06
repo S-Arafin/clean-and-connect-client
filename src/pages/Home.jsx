@@ -109,7 +109,7 @@ const Home = () => {
                     <p className="text-lg text-gray-600">
                         Be a hero in your community. Sign up for our weekly clean-up drives and make a visible difference.
                     </p>
-                    <button className="btn btn-accent btn-lg rounded-full px-10 shadow-lg">Become a Volunteer</button>
+                    <Link to='auth/login' className="btn btn-accent btn-lg rounded-full px-10 shadow-lg">Become a Volunteer</Link>
                 </div>
             </div>
         </div>
