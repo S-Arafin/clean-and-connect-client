@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const Banner = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  
-  const user = null; 
+  const { user } = useContext(AuthContext);
 
   const slides = [
     {
