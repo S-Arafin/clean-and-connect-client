@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
-import { Heart, Calendar, MapPin } from "lucide-react";
+import { Heart, Calendar, Download } from "lucide-react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
-const MyContributions = () => {
+const MyContribution = () => {
   const { user } = useContext(AuthContext);
   const [contributions, setContributions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,6 +29,46 @@ const MyContributions = () => {
     }
   };
 
+  const handleDownload = () => {
+    const doc = new jsPDF();
+    const totalDonated = contributions.reduce((total, item) => total + item.amount, 0);
+    const date = new Date().toLocaleDateString();
+
+    doc.setFontSize(18);
+    doc.text("Clean & Connect Contribution Report", 14, 20);
+    doc.setFontSize(12);
+    doc.text(`Generated on: ${date}`, 14, 27);
+    doc.text(`Contributor: ${user?.displayName || 'N/A'}`, 14, 34);
+    doc.text(`Email: ${user?.email || 'N/A'}`, 14, 41);
+
+    doc.setFontSize(14);
+    doc.setTextColor(40, 40, 40);
+    doc.text(`Total Contributions: $${totalDonated}`, 14, 55);
+
+    const tableColumn = ["Issue Title", "Amount ($)", "Date", "Message"];
+    const tableRows = [];
+
+    contributions.forEach(contrib => {
+      const contributionData = [
+        contrib.issueTitle,
+        contrib.amount,
+        new Date(contrib.date).toLocaleDateString(),
+        contrib.message || '-',
+      ];
+      tableRows.push(contributionData);
+    });
+
+    autoTable(doc, {
+        head: [tableColumn],
+        body: tableRows,
+        startY: 65,
+        theme: 'grid',
+        styles: { fontSize: 10 }
+    });
+
+    doc.save(`CleanConnect_Report_${user?.displayName || 'User'}_${date}.pdf`);
+  };
+
   if (loading)
     return (
       <div className="min-h-screen flex justify-center items-center">
@@ -47,18 +89,30 @@ const MyContributions = () => {
             </p>
           </div>
 
-          <div className="stats shadow bg-primary text-primary-content">
-            <div className="stat">
-              <div className="stat-figure text-primary-content opacity-80">
-                <Heart size={32} />
-              </div>
-              <div className="stat-title text-primary-content opacity-80">
-                Total Donated
-              </div>
-              <div className="stat-value text-3xl">
-                ${contributions.reduce((total, item) => total + item.amount, 0)}
+          <div className="flex items-center gap-4">
+            <div className="stats shadow bg-primary text-primary-content">
+              <div className="stat">
+                <div className="stat-figure text-primary-content opacity-80">
+                  <Heart size={32} />
+                </div>
+                <div className="stat-title text-primary-content opacity-80">
+                  Total Donated
+                </div>
+                <div className="stat-value text-3xl">
+                  ${contributions.reduce((total, item) => total + item.amount, 0)}
+                </div>
               </div>
             </div>
+            
+            {contributions.length > 0 && (
+              <button 
+                className="btn btn-secondary btn-outline hover:btn-secondary bg-base-100"
+                onClick={handleDownload}
+              >
+                <Download size={20} />
+                Download Report
+              </button>
+            )}
           </div>
         </div>
 
@@ -120,4 +174,4 @@ const MyContributions = () => {
   );
 };
 
-export default MyContributions;
+export default MyContribution;
