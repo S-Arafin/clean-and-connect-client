@@ -53,7 +53,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/my-contribution",
+        path: "/my-contributions",
         element: (
           <PrivateRoute>
             <MyContribution />
