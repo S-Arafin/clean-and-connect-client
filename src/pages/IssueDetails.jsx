@@ -74,7 +74,20 @@ const IssueDetails = () => {
       );
       if (res.data.insertedId) {
         toast.success("Thank you for your contribution!");
-        setContributors([...contributors, contributionData]);
+
+        const newContributors = [...contributors, contributionData];
+        setContributors(newContributors);
+
+        const totalRaised = newContributors.reduce(
+          (sum, item) => sum + item.amount,
+          0
+        );
+
+        if (totalRaised >= issue.amount) {
+          setIssue({ ...issue, status: "Resolved" });
+          toast.success("Goal Reached! Issue marked as Resolved.");
+        }
+
         document.getElementById("donation_modal").close();
         form.reset();
       }
@@ -90,6 +103,13 @@ const IssueDetails = () => {
         <span className="loading loading-spinner loading-lg text-primary"></span>
       </div>
     );
+
+  const currentRaised = contributors.reduce(
+    (sum, item) => sum + item.amount,
+    0
+  );
+  const progressPercent =
+    issue.amount > 0 ? Math.min((currentRaised / issue.amount) * 100, 100) : 0;
 
   return (
     <div className="min-h-screen bg-base-200 py-12 px-4">
@@ -132,6 +152,18 @@ const IssueDetails = () => {
                   </span>
                 </div>
 
+                <div className="my-4">
+                  <div className="flex justify-between text-sm font-bold mb-1">
+                    <span>Raised: ${currentRaised}</span>
+                    <span>Goal: ${issue.amount}</span>
+                  </div>
+                  <progress
+                    className="progress progress-primary w-full h-4"
+                    value={progressPercent}
+                    max="100"
+                  ></progress>
+                </div>
+
                 <div className="divider"></div>
 
                 <h3 className="font-bold text-lg mb-2">Description</h3>
@@ -140,12 +172,12 @@ const IssueDetails = () => {
                 </p>
 
                 {user?.email === issue.email && (
-                  <div className="mt-6 p-4 bg-base-200 rounded-lg border border-base-300 flex justify-around">
+                  <div className="mt-6 p-4 bg-base-200 rounded-lg border border-base-300">
                     <label className="label font-bold">
                       Manage Status (Admin/Owner Action)
                     </label>
                     <select
-                      className="select select-bordered w-full max-w-xs font-semibold focus:none mx-3"
+                      className="select select-bordered w-full max-w-xs font-semibold focus:select-primary"
                       value={issue.status}
                       onChange={handleStatusChange}
                     >
@@ -220,7 +252,9 @@ const IssueDetails = () => {
                 }
                 disabled={issue.status === "Resolved"}
               >
-                {issue.status === "Resolved" ? "Issue Resolved" : "Donate Now"}
+                {issue.status === "Resolved"
+                  ? "Issue Resolved"
+                  : "Donate Now"}
               </button>
             </div>
           </div>
@@ -233,7 +267,7 @@ const IssueDetails = () => {
           <div className="modal-box bg-base-100">
             <form method="dialog">
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                ✕
+                X
               </button>
             </form>
 
