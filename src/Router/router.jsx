@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/issues/:id", // Details Page
+        path: "/issues/:id",
         element: (
           <PrivateRoute>
             <IssueDetails />

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
-import { Heart, Calendar, Download } from "lucide-react";
+import { Calendar, Download } from "lucide-react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
@@ -95,9 +95,7 @@ const MyContribution = () => {
           <div className="flex items-center gap-4">
             <div className="stats shadow bg-primary text-primary-content">
               <div className="stat">
-                <div className="stat-figure text-primary-content opacity-80">
-                  <Heart size={32} />
-                </div>
+               
                 <div className="stat-title text-primary-content opacity-80">
                   Total Donated
                 </div>

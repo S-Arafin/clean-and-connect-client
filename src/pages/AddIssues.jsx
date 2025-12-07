@@ -1,37 +1,48 @@
-import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import React, { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { PlusCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-const AddIssue = () => {
+const categories = [
+  "Garbage",
+  "Illegal Construction",
+  "Broken Public Property",
+  "Road Damage",
+];
+
+const AddIssues = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
 
   const handleAddIssue = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
     const form = e.target;
-    const title = form.title.value;
-    const location = form.location.value;
+
+    const issueTitle = form.issueTitle.value;
     const category = form.category.value;
+    const location = form.location.value;
+    const amount = parseInt(form.amount.value);
     const description = form.description.value;
     const image = form.image.value;
 
+    if (amount < 1) {
+      toast.error("Estimated Budget must be greater than 0.");
+      return;
+    }
+
     const issueData = {
-      title,
-      location,
+      issueTitle,
       category,
+      location,
+      amount,
       description,
       image,
-      amount: 0,
-      status: "Open",
+      status: "ongoing",
+      date: new Date(),
       email: user?.email,
       name: user?.displayName,
-      userPhoto: user?.photoURL,
-      date: new Date().toISOString().split("T")[0],
     };
 
     try {
@@ -41,138 +52,139 @@ const AddIssue = () => {
       );
 
       if (response.data.insertedId) {
-        toast.success("Issue Reported Successfully!");
+        toast.success("Issue reported successfully!");
         form.reset();
         setTimeout(() => {
-          navigate("/issues");
+          navigate("/my-issues");
         }, 1500);
+      } else {
+        toast.error("Failed to report issue. Please try again.");
       }
     } catch (error) {
-      console.error(error);
-      toast.error("Failed to report issue. Please try again.");
-    } finally {
-      setLoading(false);
+      console.error("Issue submission error:", error);
+      toast.error("An error occurred. Check server connection.");
     }
   };
 
   return (
-    <div className="min-h-screen bg-base-200 py-12 px-4">
-      <div className="max-w-3xl mx-auto bg-base-100 rounded-2xl shadow-xl overflow-hidden">
-        <div className="bg-primary p-8 text-primary-content text-center">
-          <h2 className="text-3xl font-bold">Report an Issue</h2>
-          <p className="opacity-90 mt-2">
-            Help us make the city cleaner and safer.
-          </p>
-        </div>
-
-        <form onSubmit={handleAddIssue} className="p-8 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="form-control">
-              <label className="label font-medium">Issue Title</label>
-              <input
-                type="text"
-                name="title"
-                placeholder="e.g. Uncleaned roads"
-                className="input input-bordered w-full focus:input-primary"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label font-medium">Category</label>
-              <select
-                name="category"
-                className="select select-bordered w-full focus:select-primary"
-                required
-                defaultValue=""
-              >
-                <option value="" disabled>
-                  Select Category
-                </option>
-                <option value="Garbage">Garbage</option>
-                <option value="Pothole">Road</option>
-                <option value="Water">Water</option>
-                <option value="Electricity">Electricity</option>
-                <option value="Others">Others</option>
-              </select>
-            </div>
+    <div className="min-h-screen bg-base-200 py-10 px-4">
+      <div className="container mx-auto max-w-3xl">
+        <div className="bg-base-100 p-8 md:p-12 rounded-2xl shadow-2xl border-t-4 border-primary">
+          <div className="text-center mb-10">
+            <h2 className="text-4xl font-extrabold text-base-content mb-2">
+              Report a New Issue
+            </h2>
+            <p className="text-gray-500">
+              Your report makes a difference. Fill out the details below.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="form-control">
-              <label className="label font-medium">Location</label>
-              <input
-                type="text"
-                name="location"
-                placeholder="e.g. Kuril Dhaka"
-                className="input input-bordered w-full focus:input-primary"
-                required
-              />
+          <form onSubmit={handleAddIssue}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div className="form-control">
+                <label className="label font-medium">Issue Title</label>
+                <input
+                  type="text"
+                  name="issueTitle"
+                  placeholder="e.g., Massive garbage pileup"
+                  className="input input-bordered w-full focus:input-primary"
+                  required
+                />
+              </div>
+
+              <div className="form-control">
+                <label className="label font-medium">Category</label>
+                <select
+                  name="category"
+                  className="select select-bordered w-full focus:select-primary"
+                  required
+                >
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-            <div className="form-control">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div className="form-control">
+                <label className="label font-medium">Location</label>
+                <input
+                  type="text"
+                  name="location"
+                  placeholder="e.g., Sector 7, Park Avenue"
+                  className="input input-bordered w-full focus:input-primary"
+                  required
+                />
+              </div>
+
+              <div className="form-control">
+                <label className="label font-medium">
+                  Estimated Budget ($)
+                </label>
+                <input
+                  type="number"
+                  name="amount"
+                  placeholder="e.g., 500"
+                  className="input input-bordered w-full focus:input-primary"
+                  required
+                  min="1"
+                />
+              </div>
+            </div>
+            <div className="form-control mb-6">
               <label className="label font-medium">Image URL</label>
               <input
                 type="url"
                 name="image"
-                placeholder="https://..."
+                placeholder="Paste image link of the issue here"
                 className="input input-bordered w-full focus:input-primary"
                 required
               />
             </div>
-          </div>
-
-          <div className="form-control">
-            <label className="label font-medium">Description</label>
-            <textarea
-              name="description"
-              className="textarea textarea-bordered h-32 focus:textarea-primary"
-              placeholder="Describe the issue in detail..."
-              required
-            ></textarea>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-base-200 p-4 rounded-lg">
-            <div className="form-control">
-              <label className="label text-xs uppercase font-bold text-gray-500">
-                Reporter Name
-              </label>
-              <input
-                type="text"
-                value={user?.displayName || "Unknown"}
-                disabled
-                className="input input-ghost w-full font-bold"
-              />
+            <div className="form-control mb-6">
+              <label className="label font-medium">Description</label>
+              <textarea
+                name="description"
+                placeholder="Describe the severity and scope of the issue..."
+                className="textarea textarea-bordered h-32 w-full focus:textarea-primary"
+                required
+              ></textarea>
             </div>
-            <div className="form-control">
-              <label className="label text-xs uppercase font-bold text-gray-500">
-                Reporter Email
-              </label>
-              <input
-                type="text"
-                value={user?.email || "Unknown"}
-                disabled
-                className="input input-ghost w-full font-bold"
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div className="form-control">
+                <label className="label font-medium">Reported By (Name)</label>
+                <input
+                  type="text"
+                  value={user?.displayName || "N/A"}
+                  className="input input-bordered w-full bg-base-300 cursor-not-allowed"
+                  readOnly
+                />
+              </div>
+              <div className="form-control">
+                <label className="label font-medium">Reporter Email</label>
+                <input
+                  type="email"
+                  value={user?.email || "N/A"}
+                  className="input input-bordered w-full bg-base-300 cursor-not-allowed"
+                  readOnly
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="form-control mt-6">
             <button
               type="submit"
-              className="btn btn-primary w-full text-lg"
-              disabled={loading}
+              className="btn btn-primary btn-block text-lg shadow-xl hover:scale-[1.01] transition-transform gap-2"
             >
-              {loading ? (
-                <span className="loading loading-spinner"></span>
-              ) : (
-                "Submit Report"
-              )}
+              <PlusCircle size={24} />
+              Submit Issue Report
             </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };
 
-export default AddIssue;
+export default AddIssues;
