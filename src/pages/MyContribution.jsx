@@ -31,15 +31,18 @@ const MyContribution = () => {
 
   const handleDownload = () => {
     const doc = new jsPDF();
-    const totalDonated = contributions.reduce((total, item) => total + item.amount, 0);
+    const totalDonated = contributions.reduce(
+      (total, item) => total + item.amount,
+      0
+    );
     const date = new Date().toLocaleDateString();
 
     doc.setFontSize(18);
     doc.text("Clean & Connect Contribution Report", 14, 20);
     doc.setFontSize(12);
     doc.text(`Generated on: ${date}`, 14, 27);
-    doc.text(`Contributor: ${user?.displayName || 'N/A'}`, 14, 34);
-    doc.text(`Email: ${user?.email || 'N/A'}`, 14, 41);
+    doc.text(`Contributor: ${user?.displayName || "N/A"}`, 14, 34);
+    doc.text(`Email: ${user?.email || "N/A"}`, 14, 41);
 
     doc.setFontSize(14);
     doc.setTextColor(40, 40, 40);
@@ -48,25 +51,25 @@ const MyContribution = () => {
     const tableColumn = ["Issue Title", "Amount ($)", "Date", "Message"];
     const tableRows = [];
 
-    contributions.forEach(contrib => {
+    contributions.forEach((contrib) => {
       const contributionData = [
         contrib.issueTitle,
         contrib.amount,
         new Date(contrib.date).toLocaleDateString(),
-        contrib.message || '-',
+        contrib.message || "-",
       ];
       tableRows.push(contributionData);
     });
 
     autoTable(doc, {
-        head: [tableColumn],
-        body: tableRows,
-        startY: 65,
-        theme: 'grid',
-        styles: { fontSize: 10 }
+      head: [tableColumn],
+      body: tableRows,
+      startY: 65,
+      theme: "grid",
+      styles: { fontSize: 10 },
     });
 
-    doc.save(`CleanConnect_Report_${user?.displayName || 'User'}_${date}.pdf`);
+    doc.save(`CleanConnect_Report_${user?.displayName || "User"}_${date}.pdf`);
   };
 
   if (loading)
@@ -99,13 +102,17 @@ const MyContribution = () => {
                   Total Donated
                 </div>
                 <div className="stat-value text-3xl">
-                  ${contributions.reduce((total, item) => total + item.amount, 0)}
+                  $
+                  {contributions.reduce(
+                    (total, item) => total + item.amount,
+                    0
+                  )}
                 </div>
               </div>
             </div>
-            
+
             {contributions.length > 0 && (
-              <button 
+              <button
                 className="btn btn-secondary btn-outline hover:btn-secondary bg-base-100"
                 onClick={handleDownload}
               >
