@@ -36,7 +36,10 @@ const Register = () => {
         };
 
         axios
-          .post("http://localhost:3000/register", userInfo)
+          .post(
+            "https://clean-and-connect-server.vercel.app/register",
+            userInfo
+          )
           .then(() => {
             setUser(user);
             toast.success("Login successful!");
@@ -108,7 +111,10 @@ const Register = () => {
               email: email,
               photo: photo,
             };
-            axios.post("http://localhost:3000/register", userInfo);
+            axios.post(
+              "https://clean-and-connect-server.vercel.app/register",
+              userInfo
+            );
 
             setUser({ ...createdUser, displayName: name, photoURL: photo });
             toast.success("Registration successful!");

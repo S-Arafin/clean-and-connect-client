@@ -18,12 +18,12 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/issues-recent")
+      .get("https://clean-and-connect-server.vercel.app/issues-recent")
       .then((res) => setRecentIssues(res.data))
       .catch((err) => console.error(err));
 
     axios
-      .get("http://localhost:3000/stats")
+      .get("https://clean-and-connect-server.vercel.app/stats")
       .then((res) => setStats(res.data))
       .catch((err) => console.error(err));
   }, []);

@@ -20,7 +20,7 @@ const MyIssues = () => {
   const fetchMyIssues = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/my-issues/${user.email}`
+        `https://clean-and-connect-server.vercel.app/my-issues/${user.email}`
       );
       setIssues(response.data);
     } catch (error) {
@@ -42,7 +42,9 @@ const MyIssues = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const res = await axios.delete(`http://localhost:3000/issues/${id}`);
+          const res = await axios.delete(
+            `https://clean-and-connect-server.vercel.app/issues/${id}`
+          );
           if (res.data.deletedCount > 0) {
             const remaining = issues.filter((issue) => issue._id !== id);
             setIssues(remaining);

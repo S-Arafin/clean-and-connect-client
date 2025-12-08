@@ -15,11 +15,13 @@ const IssueDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const issueRes = await axios.get(`http://localhost:3000/issues/${id}`);
+        const issueRes = await axios.get(
+          `https://clean-and-connect-server.vercel.app/issues/${id}`
+        );
         setIssue(issueRes.data);
 
         const contribRes = await axios.get(
-          `http://localhost:3000/contributions/${id}`
+          `https://clean-and-connect-server.vercel.app/contributions/${id}`
         );
         setContributors(contribRes.data);
       } catch (error) {
@@ -37,7 +39,7 @@ const IssueDetails = () => {
 
     try {
       const res = await axios.patch(
-        `http://localhost:3000/issues/${id}`,
+        `https://clean-and-connect-server.vercel.app/issues/${id}`,
         updatedIssue
       );
       if (res.data.modifiedCount > 0) {
@@ -69,7 +71,7 @@ const IssueDetails = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/contributions",
+        "https://clean-and-connect-server.vercel.app/contributions",
         contributionData
       );
       if (res.data.insertedId) {
@@ -252,9 +254,7 @@ const IssueDetails = () => {
                 }
                 disabled={issue.status === "Resolved"}
               >
-                {issue.status === "Resolved"
-                  ? "Issue Resolved"
-                  : "Donate Now"}
+                {issue.status === "Resolved" ? "Issue Resolved" : "Donate Now"}
               </button>
             </div>
           </div>

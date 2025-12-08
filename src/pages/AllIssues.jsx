@@ -13,7 +13,7 @@ const AllIssues = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:3000/issues?search=${search}`
+          `https://clean-and-connect-server.vercel.app/issues?search=${search}`
         );
         setIssues(response.data);
       } catch (error) {

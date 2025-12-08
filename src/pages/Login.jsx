@@ -31,7 +31,10 @@ const Login = () => {
         };
 
         axios
-          .post("http://localhost:3000/register", userInfo)
+          .post(
+            "https://clean-and-connect-server.vercel.app/register",
+            userInfo
+          )
           .then(() => {
             toast.success("Login successful!");
             navigate(from, { replace: true });

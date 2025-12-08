@@ -47,7 +47,7 @@ const AddIssues = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/issues",
+        "https://clean-and-connect-server.vercel.app/issues",
         issueData
       );
 

@@ -19,7 +19,7 @@ const MyContribution = () => {
   const fetchContributions = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/my-contributions/${user.email}`
+        `https://clean-and-connect-server.vercel.app/my-contributions/${user.email}`
       );
       setContributions(response.data);
     } catch (error) {
@@ -95,7 +95,6 @@ const MyContribution = () => {
           <div className="flex items-center gap-4">
             <div className="stats shadow bg-primary text-primary-content">
               <div className="stat">
-               
                 <div className="stat-title text-primary-content opacity-80">
                   Total Donated
                 </div>
