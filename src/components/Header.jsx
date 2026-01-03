@@ -31,6 +31,8 @@ const Header = () => {
     <>
       <li><NavLink to="/">Home</NavLink></li>
       <li><NavLink to="/issues">Issues</NavLink></li>
+      <li><NavLink to="/about">About Us</NavLink></li>
+      <li><NavLink to="/community-stats">Community Growth</NavLink></li>
       {user && (
         <>
             <li><NavLink to="/add-issue">Add Issue</NavLink></li>
@@ -83,6 +85,7 @@ const Header = () => {
               </div>
               <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                 <li className="menu-title px-4 py-2">Hi, {user?.displayName || "User"}</li>
+                <li className="text-bold text-primary"><Link to='/dashboard'>Dashboard</Link></li>
                 <li><button onClick={handleLogout} className="text-error font-bold">Logout</button></li>
               </ul>
             </div>

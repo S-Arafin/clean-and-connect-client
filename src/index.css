@@ -3,11 +3,27 @@
 @plugin "daisyui/theme" {
   name: "forest";
   default: true;
-  --color-primary: blue;
+  --color-primary: powderBlue;
   --color-secondary: teal;
 }
 
 
 @plugin "daisyui/theme" {
-  name: "cupcake"; 
+  name: "fantasy"; 
+  default: true;
+  --color-primary: Indigo;
+  --color-secondary: Teal;
+  --color-accent: #c2410c;
+}
+@layer components {
+  .btn-primary, 
+  .btn-secondary,
+  .btn-accent:not(.btn):not(.btn-outline):not(.btn-ghost) {
+    @apply border-none text-white;
+    background-image: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%) !important;
+  }
+
+  .btn-accent {
+    background-image: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%) !important;
+  }
 }

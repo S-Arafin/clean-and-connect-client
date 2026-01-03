@@ -12,6 +12,9 @@ import MyContribution from "../pages/MyContribution";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ErrorPage from "../pages/ErrorPage"; // 404 Page
+import AboutUs from "../pages/AboutUs";
+import Dashboard from "../pages/Dashboard";
+import CommunityStatus from "../pages/CommunityStatus";
 
 const router = createBrowserRouter([
   {
@@ -39,9 +42,9 @@ const router = createBrowserRouter([
       {
         path: "/issues/:id",
         element: (
-          <PrivateRoute>
+    
             <IssueDetails />
-          </PrivateRoute>
+      
         ),
       },
       {
@@ -60,6 +63,22 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path:"/about",
+        element:<AboutUs/>
+      },
+      {
+        path:"/community-stats",
+        element:<CommunityStatus/>
+      },
+      {
+        path:"/dashboard",
+        element: (
+          <PrivateRoute>
+            <Dashboard></Dashboard>
+          </PrivateRoute>
+        ),
+      }
     ],
   },
   {

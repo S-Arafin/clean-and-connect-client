@@ -11,7 +11,7 @@ const AuthLayout = () => {
             <div className="flex-grow flex justify-center items-center py-10 px-4">
                 <Outlet />
             </div>
-            <ToastContainer position="top-center" />
+            <ToastContainer className="text-primary" position="top-center" />
         </div>
     );
 };
