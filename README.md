@@ -1,36 +1,86 @@
-# 🌍 CleanConnect - Community Issue Tracker
+🌍 CleanConnect - Community Issue Tracker
+Live Site: https://clean-and-connect.web.app/
 
-**Live Site:** https://clean-and-connect.web.app/
+Backend API (Vercel): https://clean-and-connect-server.vercel.app/
 
-**CleanConnect** is a full-stack MERN (MongoDB, Express, React, Node) application designed to empower communities. It allows citizens to report local environmental issues—such as garbage buildup, road damage, or illegal construction—and track their resolution. Users can contribute funds to solve issues, track their impact, and download reports.
+To login there is already a button.
+Email : demo@email.com
+password : @12345
 
----
+CleanConnect is a professional full-stack MERN application designed to bridge the gap between community environmental problems and collective solutions. Citizens can report local issues—such as garbage buildup or road damage—and the community can crowdfund the required budget to resolve them.
 
-## 🚀 Key Features
+🚀 Key Features
+Premium Skeleton Loading System: Implemented a sophisticated loading experience using DaisyUI and Framer Motion, ensuring a smooth, layout-shift-free experience on all data-heavy pages (Home, All Issues, Dashboards).
 
-* **Secure Authentication:** Robust user login and registration system using **Firebase** (Email/Password & Google Social Login) with JWT-secured private routes.
-* **Real-time Issue Reporting:** Logged-in users can report issues with details like location, category (Garbage, Potholes, etc.), images, and estimated budgets.
-* **Smart Status Tracking:** Issues are tracked from "Open" to "Resolved." The system **automatically marks an issue as Resolved** when user donations meet the required budget.
-* **Contribution System & Reports:** Users can donate to specific causes via a secure modal. A "Download Report" feature uses **jsPDF** to generate a professional PDF summary of all user contributions.
-* **Dynamic Dashboard:** Personalized "My Issues" and "My Contributions" pages allow users to manage their reports (Update/Delete) and view their donation history.
-* **Responsive & Interactive UI:** Built with **Tailwind CSS** and **DaisyUI**, featuring Dark/Light mode toggle, smooth animations (Framer Motion), and a responsive grid layout.
+Secure Authentication & Recovery: Robust identity management via Firebase Auth, featuring Google Social Login, JWT-secured routes, and a built-in Password Reset flow for forgotten credentials.
 
----
+Dynamic Financial Dashboard: A high-end user dashboard providing a "Financial Impact" summary, interactive contribution logs, and visualized impact metrics using Recharts.
 
-## 🛠️ Technologies Used
+Smart Status & Automation: Issues move dynamically from "Open" to "Resolved." The system automatically triggers a status update once community contributions meet or exceed the estimated budget.
 
-### Frontend (Client)
-* **React.js (Vite):** Fast, modern UI library.
-* **Tailwind CSS & DaisyUI:** For rapid, responsive, and thematic styling.
-* **Firebase Authentication:** Secure user identity management.
-* **Axios:** For handling HTTP requests to the backend.
-* **Framer Motion:** For smooth page transitions and banner animations.
-* **jsPDF & AutoTable:** For generating downloadable PDF reports.
-* **React Toastify & SweetAlert2:** For user notifications and confirmation alerts.
+Professional PDF Reporting: Integrated jsPDF and AutoTable to allow users to download official "Impact Reports" summarizing their contributions with transaction IDs and dates.
 
-### Backend (Server)
-* **Node.js & Express.js:** RESTful API architecture.
-* **MongoDB (Atlas):** NoSQL database for storing users, issues, and contributions.
-* **Cors & Dotenv:** Middleware for security and environment variable management.
+Contact & Communication: Integrated EmailJS to handle community inquiries directly from the frontend, ensuring reliable delivery without the need for a dedicated SMTP server.
 
----
+Advanced Filtering & Search: A lightning-fast search system with category-based filtering and custom pagination for seamless navigation through community reports.
+
+🛠️ Technologies Used
+Frontend (Client)
+React 19 (Vite): Leveraging the latest use() hooks for modern context management.
+
+Tailwind CSS & DaisyUI: Custom thematic styling with high-contrast visual hierarchy.
+
+Framer Motion: For premium "Entrance" animations and skeleton pulse effects.
+
+Recharts: Beautiful data visualization for community and personal impact statistics.
+
+Lucide React: A consistent, high-quality icon set used throughout the UI.
+
+Axios: Optimized HTTP client for backend communication.
+
+EmailJS: For serverless contact form functionality.
+
+Backend (Server)
+Node.js & Express.js: Scalable RESTful API architecture.
+
+MongoDB (Atlas): NoSQL database for efficient storage of issues and donation logs.
+
+Vercel: Optimized deployment for the backend environment.
+
+JWT (JSON Web Token): For secure, stateless user session authorization.
+
+📂 Project Structure
+Plaintext
+
+src/
+├── components/          # Reusable UI elements (Skeleton Loaders, Banners, Cards)
+├── context/             # AuthContext for global user & loading states
+├── layouts/             # Main and Auth layout structures with <Outlet />
+├── pages/               # Page-level components (Dashboard, Home, AllIssues, etc.)
+└── firebase/            # Firebase initialization and configuration
+⚙️ Installation & Setup
+Clone the repository:
+
+Bash
+
+git clone https://github.com/S-Arafin/clean-and-connect.git
+Install dependencies:
+
+Bash
+
+npm install
+Environment Variables: Create a .env file in the root and add your Firebase and EmailJS credentials:
+
+Code snippet
+
+VITE_FIREBASE_API_KEY=your_key
+VITE_EMAILJS_SERVICE_ID=your_id
+VITE_EMAILJS_TEMPLATE_ID=your_template
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+Run the application:
+
+Bash
+
+npm run dev
+🛡️ License
+This project is developed for community empowerment and portfolio demonstration. All rights reserved by Sultanul Arafin.
