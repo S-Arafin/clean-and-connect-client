@@ -3,9 +3,9 @@ Live Site: https://clean-and-connect.web.app/
 
 Backend API (Vercel): https://clean-and-connect-server.vercel.app/
 
-To login there is already a button.
-Email : demo@email.com
-password : @12345
+To log in for demo, there is already a built-in button.<br>
+Email: demo@email.com<br>
+password: @12345
 
 CleanConnect is a professional full-stack MERN application designed to bridge the gap between community environmental problems and collective solutions. Citizens can report local issues—such as garbage buildup or road damage—and the community can crowdfund the required budget to resolve them.
 
@@ -47,19 +47,6 @@ MongoDB (Atlas): NoSQL database for efficient storage of issues and donation log
 
 Vercel: Optimized deployment for the backend environment.
 
-JWT (JSON Web Token): For secure, stateless user session authorization.
-
-📂 Project Structure
-Plaintext
-
-src/
-├── components/          # Reusable UI elements (Skeleton Loaders, Banners, Cards)
-├── context/             # AuthContext for global user & loading states
-├── layouts/             # Main and Auth layout structures with <Outlet />
-├── pages/               # Page-level components (Dashboard, Home, AllIssues, etc.)
-└── firebase/            # Firebase initialization and configuration
-⚙️ Installation & Setup
-Clone the repository:
 
 Bash
 
